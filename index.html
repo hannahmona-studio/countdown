@@ -1,0 +1,334 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Halloween Indie Game Event</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Mplus+1p:wght@700&family=Noto+Sans+JP:wght@900&family=Press+Start+2P&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==============================================
+        1. basic design 3a1300 7a2800 b83b00
+        ============================================== */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: linear-gradient(135deg, #facc89 0%, #f7b551 50%, #d98700 100%);
+      color: #ffffff;
+      font-family: 'Mplus 1p', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* smartphone size（-500px） */
+    .app-container {
+      width: 100%;
+      max-width: 500px;
+      min-height: 100vh;
+      padding: 2rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      text-align: center;
+      position: relative;
+      z-index: 10;
+    }
+
+    /* ==============================================
+        2. header & title design
+        ============================================== */
+    .header {
+      margin-top: 1rem;
+    }
+
+    .event-badge {
+      display: inline-block;
+      background: rgba(157, 78, 221, 0.2);
+      color: #8957a0;
+      border: 1px solid #9d4edd;
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-family: 'Press Start 2P', monospace;
+      margin-bottom: 0.8rem;
+      box-shadow: 0 0 10px rgba(157, 78, 221, 0.3);
+    }
+
+    h1 {
+      font-family: 'Creepster', cursive;
+      font-size: 2.8rem;
+      color: #a50000;
+      text-shadow: 
+        0 0 5px #ec6841,
+        0 0 15px #ec6841,
+        0 0 30px #ec6841;
+      letter-spacing: 2px;
+      line-height: 1.1;
+    }
+
+    .sub-title {
+      font-size: 0.9rem;
+      color: #a50000;
+      margin-top: 0.5rem;
+      letter-spacing: 1px;
+    }
+
+    /* ==============================================
+        3. animation）
+        ============================================== */
+    .character-section {
+      position: relative;
+      margin: 1.5rem 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .floating-devil {
+      width: 500px;
+      height: 500px;
+      object-fit: contain;
+      animation: float 3.5s ease-in-out infinite alternate;
+      filter: drop-shadow(0 0 15px rgba(186, 85, 211, 0.6));
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(0px) rotate(0deg);
+      }
+      50% {
+        transform: translateY(-12px) rotate(-3deg);
+      }
+      100% {
+        transform: translateY(-22px) rotate(3deg);
+      }
+    }
+
+    .shadow {
+      width: 100px;
+      height: 12px;
+      background: rgba(0, 0, 0, 0.4);
+      border-radius: 50%;
+      margin-top: -10px;
+      animation: shadowPulse 3.5s ease-in-out infinite alternate;
+    }
+
+    @keyframes shadowPulse {
+      0% {
+        transform: scale(1);
+        opacity: 0.6;
+      }
+      100% {
+        transform: scale(0.6);
+        opacity: 0.2;
+      }
+    }
+
+    .emoji-fallback {
+      font-size: 8rem;
+      line-height: 1;
+      animation: float 3.5s ease-in-out infinite alternate;
+      filter: drop-shadow(0 0 15px rgba(186, 85, 211, 0.6));
+    }
+
+    /* ==============================================
+        4. countdown
+        ============================================== */
+    .countdown-card {
+      width: 100%;
+      background: rgba(26, 11, 46, 0.7);
+      border: 3px solid rgba(186, 85, 211, 0.6);
+      border-radius: 16px;
+      padding: 1.5rem 1rem;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    }
+
+    .status-title {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.75rem;
+      color: #e0aaff;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .timer-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.5rem;
+    }
+
+    .timer-box {
+      background: rgba(13, 7, 20, 0.8);
+      border: 2px solid #9d4edd;
+      border-radius: 8px;
+      padding: 0.6rem 0.2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .timer-num {
+      /* 【変更】フォントを太いゴシック体（Noto Sans JPの極太）に変更 */
+      font-family: 'Noto Sans JP', sans-serif;
+      font-weight: 900;
+      font-size: 1.5rem;
+      color: #e0aaff;
+      text-shadow: 
+        -1px -1px 0 #7b2cbf,  
+         1px -1px 0 #7b2cbf,
+        -1px  1px 0 #7b2cbf,
+         1px  1px 0 #7b2cbf,
+         0 0 10px rgba(199, 125, 255, 0.8);
+    }
+
+    .timer-label {
+      font-size: 0.6rem;
+      color: #c77dff;
+      margin-top: 0.3rem;
+      text-transform: uppercase;
+    }
+
+    .live-status {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 1.8rem;
+      color: #00ff88;
+      text-shadow: 0 0 10px #00ff88, 0 0 20px #00ff88;
+      animation: blink 1.5s infinite alternate;
+      padding: 1rem 0;
+    }
+
+    @keyframes blink {
+      0% { opacity: 0.7; }
+      100% { opacity: 1; }
+    }
+
+    .ended-status {
+      font-size: 1rem;
+      color: #d1b3ff;
+      line-height: 1.6;
+      padding: 0.5rem 0;
+    }
+
+    /* ==============================================
+        5. footer
+        ============================================== */
+    .footer {
+      font-size: 0.75rem;
+      color: #9d4edd;
+      margin-bottom: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-container">
+    <header class="header">
+      <span class="event-badge">WELCOME!!</span>
+      <h1>TOKYO GAME<br>DUNGEON!!</h1>
+      <p class="sub-title">Special IndieGame Booth</p>
+    </header>
+
+    <div class="character-section">
+      <img 
+        src="d.png" 
+        alt="Little Devil Character" 
+        class="floating-devil" 
+        id="devilImage"
+        onerror="showEmojiFallback()"
+      >
+      <div class="emoji-fallback" id="emojiFallback" style="display: none;">😈</div>
+      <div class="shadow"></div>
+    </div>
+
+    <div class="countdown-card">
+      <div class="status-title" id="statusTitle">EVENT STARTS IN</div>
+      <div id="displayArea">
+        <div class="timer-grid">
+          <div class="timer-box"><span class="timer-num" id="days">00</span><span class="timer-label">DAYS</span></div>
+          <div class="timer-box"><span class="timer-num" id="hours">00</span><span class="timer-label">HOURS</span></div>
+          <div class="timer-box"><span class="timer-num" id="mins">00</span><span class="timer-label">MINS</span></div>
+          <div class="timer-box"><span class="timer-num" id="secs">00</span><span class="timer-label">SECS</span></div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="footer">
+      Fanart☆NO OFFICIAL
+    </footer>
+  </div>
+
+  <script>
+    function showEmojiFallback() {
+      document.getElementById('devilImage').style.display = 'none';
+      document.getElementById('emojiFallback').style.display = 'block';
+    }
+
+    function getJSTDate() {
+      const now = new Date();
+      const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+      return new Date(utc + (3600000 * 9));
+    }
+
+    function updateAppStatus() {
+      const nowJST = getJSTDate();
+      const currentYear = nowJST.getFullYear();
+
+      const eventStart = new Date(Date.UTC(currentYear, 9, 31, 0 - 9, 0, 0));
+      const eventEnd = new Date(Date.UTC(currentYear, 10, 1, 0 - 9, 0, 0)); 
+
+      const statusTitleEl = document.getElementById('statusTitle');
+      const displayAreaEl = document.getElementById('displayArea');
+
+      if (nowJST >= eventStart && nowJST < eventEnd) {
+        statusTitleEl.textContent = "STATUS";
+        displayAreaEl.innerHTML = `
+          <div class="live-status">OPEN!</div>
+        `;
+        return;
+      }
+
+      if (nowJST >= eventEnd) {
+        statusTitleEl.textContent = "THANK YOU";
+        displayAreaEl.innerHTML = `
+          <div class="ended-status">
+            Event Ended.<br>THANK YOU for visiting!
+          </div>
+        `;
+        return;
+      }
+
+      statusTitleEl.textContent = "EVENT STARTS IN";
+      
+      const diffTime = eventStart.getTime() - nowJST.getTime();
+
+      const d = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+      const h = Math.floor((diffTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const m = Math.floor((diffTime % (1000 * 60 * 60)) / (1000 * 60));
+      const s = Math.floor((diffTime % (1000 * 60)) / 1000);
+
+      document.getElementById('days').textContent = String(d).padStart(2, '0');
+      document.getElementById('hours').textContent = String(h).padStart(2, '0');
+      document.getElementById('mins').textContent = String(m).padStart(2, '0');
+      document.getElementById('secs').textContent = String(s).padStart(2, '0');
+    }
+
+    updateAppStatus();
+    setInterval(updateAppStatus, 1000);
+  </script>
+</body>
+</html>
